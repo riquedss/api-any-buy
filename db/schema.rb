@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_28_050744) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_28_223454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,10 +68,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_050744) do
     t.string "last_name"
     t.string "phone"
     t.string "email"
-    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "cart_id"
+    t.string "password_digest"
     t.index ["cart_id"], name: "index_users_on_cart_id"
   end
 
