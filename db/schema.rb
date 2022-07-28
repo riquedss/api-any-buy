@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_050744) do
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "cart_id", null: false
+    t.bigint "cart_id"
     t.index ["cart_id"], name: "index_users_on_cart_id"
   end
 
