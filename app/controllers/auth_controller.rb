@@ -1,7 +1,6 @@
 class AuthController < ApplicationController
   def login
     @user = User.find_by(email: set_user[:email])
-    byebug
     if @user && @user.authenticate(set_user[:password])
       token = JsonWebToken::Base.encode(User_id: @user.id)
       render json: { token: token }, status: :ok
