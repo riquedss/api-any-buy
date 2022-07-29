@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'auth/login'
-  get 'auth/signup'
+  post 'login', to: 'auth#login'
+  post 'signup', to: 'auth#signup'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
