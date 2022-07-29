@@ -6,6 +6,20 @@ class ProductsController < ApplicationController
     render json: @products, status: :ok
   end
 
+  def index_konsol_game
+    @konsol_games = Product.konsol_game
+    render json: @konsol_games, status: :ok
+  end
+
+  def index_laptop
+    @laptops = Product.laptop
+    render json: @laptops, status: :ok
+  end
+
+  def index_smartphone
+    @smartphones = Product.smartphone
+    render json: @smartphones, status: :ok
+  end
   def show
     if @product
       render json: @product, status: :ok
