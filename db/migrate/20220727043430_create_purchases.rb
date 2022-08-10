@@ -1,6 +1,6 @@
 class CreatePurchases < ActiveRecord::Migration[7.0]
   def change
-    create_table :purchases do |t|
+    create_table :purchases, id: :uuid do |t|
       t.string :country
       t.string :city
       t.string :district

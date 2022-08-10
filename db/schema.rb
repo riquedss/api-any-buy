@@ -12,24 +12,26 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "carts", force: :cascade do |t|
+  create_table "carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.float "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "favorites", force: :cascade do |t|
+  create_table "favorites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.bigint "product_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "product_id", null: false
     t.index ["product_id"], name: "index_favorites_on_product_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "description"
     t.integer "kind"
     t.string "url_image"
@@ -38,7 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "purchases", force: :cascade do |t|
+  create_table "purchases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "country"
     t.string "city"
     t.string "district"
@@ -47,8 +49,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
     t.integer "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.bigint "product_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "product_id", null: false
     t.index ["product_id"], name: "index_purchases_on_product_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
@@ -56,20 +58,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
   create_table "storages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "cart_id", null: false
-    t.bigint "product_id", null: false
+    t.uuid "cart_id", null: false
+    t.uuid "product_id", null: false
     t.index ["cart_id"], name: "index_storages_on_cart_id"
     t.index ["product_id"], name: "index_storages_on_product_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "last_name"
     t.string "phone"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "cart_id"
+    t.uuid "cart_id"
     t.string "password_digest"
     t.integer "kind", default: 0
     t.index ["cart_id"], name: "index_users_on_cart_id"
