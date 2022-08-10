@@ -12,7 +12,6 @@ class AuthController < ApplicationController
   end
 
   def signup
-    byebug
     @user = User.new(params_user)
     if @user.save
       render(json: @user, status: :created)
