@@ -6,10 +6,6 @@ Rails.application.routes.draw do
 
   put 'users/adm/:id', to: 'users#update_adm'
   resources :users
-
-  get 'products/konsol-game', to: 'products#index_konsol_game'
-  get 'products/laptop', to: 'products#index_laptop'
-  get 'products/smartphone', to: 'products#index_smartphone'
   resources :products
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

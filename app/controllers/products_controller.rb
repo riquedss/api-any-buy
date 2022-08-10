@@ -4,23 +4,8 @@ class ProductsController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   def index
-    @products = Product.all
-    render(json: @products, status: :ok)
-  end
-
-  def index_konsol_game
-    @konsol_games = Product.konsol_game
-    render(json: @konsol_games, status: :ok)
-  end
-
-  def index_laptop
-    @laptops = Product.laptop
-    render(json: @laptops, status: :ok)
-  end
-
-  def index_smartphone
-    @smartphones = Product.smartphone
-    render(json: @smartphones, status: :ok)
+    @products = list_products(params[:type])
+    render(json: @products)
   end
 
   def show
@@ -64,5 +49,18 @@ class ProductsController < ApplicationController
 
   def params_user
     params.require(:product).permit(:description, :kind, :url_image, :price)
+  end
+
+  def list_products(type)
+    case type
+    when 'konsol_game'
+      Product.konsol_game
+    when 'laptop'
+      Product.laptop
+    when 'smartphone'
+      Product.smartphone
+    else
+      Product.all
+    end
   end
 end
