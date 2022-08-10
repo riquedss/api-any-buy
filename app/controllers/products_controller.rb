@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
+  before_action only: %i[create update destroy] do verify_authenticated('adm') end
+  before_action only: %i[index show] do verify_authenticated end
   before_action :set_user, only: %i[show update destroy]
 
   def index
@@ -9,17 +11,13 @@ class ProductsController < ApplicationController
   end
 
   def show
-    if @product
-      render(json: @product, status: :ok)
-    else
-      render(json: { message: 'Product not foud!' }, status: :not_found)
-    end
+    render(json: @product)
   end
 
   def create
     @product = Product.new(params_user)
     if @product.save
-      render(json: @product, status: :ok)
+      render(json: @product)
     else
       render(json: @product.errors, status: :unprocessable_entity)
     end
@@ -27,18 +25,14 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(params_user)
-      render(json: @product, status: :ok)
+      render(json: @product)
     else
-      render(json: @product.errors, status: :not_found)
+      render(json: @product.errors, status: :unprocessable_entity)
     end
   end
 
   def destroy
-    if @product.destroy
-      render(json: { message: 'Product deleted!' }, status: :ok)
-    else
-      render(json: @product.errors, status: :not_found)
-    end
+    @product.destroy
   end
 
   private
