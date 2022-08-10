@@ -2,14 +2,14 @@
 
 module JsonWebToken
   class Base
-    SECRET = SecureRandom.base58(64)
+    SECRET = ENV.fetch('JWT_KEY', nil)
     def self.encode(id)
       JWT.encode(id, SECRET)
     end
 
     def self.decode(token)
       JWT.decode(token, SECRET)
-    rescue StandardError => exception
+    rescue StandardError
       nil
     end
   end

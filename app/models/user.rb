@@ -10,12 +10,4 @@ class User < ApplicationRecord
   has_secure_password
 
   enum kind: { user: 0, adm: 1 }
-
-  def update_for_adm
-    if user?
-      self.kind = 1
-    else
-      false
-    end
-  end
 end

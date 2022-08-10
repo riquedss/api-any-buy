@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action { verify_authenticated('adm') }
   before_action :set_user, only: %i[show update update_adm destroy]
 
   def index
     @users = User.all
-    render(json: @users, status: :ok)
+    render(json: @users)
   end
 
   def show
     if @user
-      render(json: @user, status: :ok)
+      render(json: @user)
     else
-      render(json: { message: 'Product not foud!' }, status: :not_found)
+      render(json: @user.errors, status: :not_found)
     end
   end
 
@@ -34,19 +35,15 @@ class UsersController < ApplicationController
   end
 
   def update_adm
-    if @user.update_for_adm
-      render(json: @user, status: :ok)
+    if @user.update({ role: 1 })
+      render(json: @user)
     else
-      render(json: { message: 'User is adm!' }, status: :ok)
+      render(json: @user.errors)
     end
   end
 
   def destroy
-    if @user.destroy
-      render(json: { message: 'User deleted!' }, status: :ok)
-    else
-      render(json: @user.errors, status: :not_found)
-    end
+    @user.destroy
   end
 
   private
