@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
     t.float "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "favorites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -71,17 +73,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "cart_id"
     t.string "password_digest"
     t.integer "kind", default: 0
-    t.index ["cart_id"], name: "index_users_on_cart_id"
   end
 
+  add_foreign_key "carts", "users"
   add_foreign_key "favorites", "products"
   add_foreign_key "favorites", "users"
   add_foreign_key "purchases", "products"
   add_foreign_key "purchases", "users"
   add_foreign_key "storages", "carts"
   add_foreign_key "storages", "products"
-  add_foreign_key "users", "carts"
 end
