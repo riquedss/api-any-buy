@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_002257) do
   enable_extension "uuid-ossp"
 
   create_table "carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.float "total"
+    t.float "total", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
