@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  belongs_to :cart, optional: true
-  has_many :Purchases
+  has_one :cart, dependent: :destroy
+  has_many :purchases
   has_many :products, through: :purchases
   has_many :favorites, dependent: :destroy
   has_many :product, through: :favorites
