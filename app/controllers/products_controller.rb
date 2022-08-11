@@ -3,7 +3,7 @@
 class ProductsController < ApplicationController
   before_action only: %i[create update destroy] do verify_authenticated('adm') end
   before_action only: %i[index show] do verify_authenticated end
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_products, only: %i[show update destroy]
 
   def index
     @products = list_products(params[:type])
@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(params_user)
+    @product = Product.new(params_product)
     if @product.save
       render(json: @product)
     else
@@ -24,7 +24,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    if @product.update(params_user)
+    if @product.update(params_product)
       render(json: @product)
     else
       render(json: @product.errors, status: :unprocessable_entity)
@@ -37,11 +37,11 @@ class ProductsController < ApplicationController
 
   private
 
-  def set_user
+  def set_products
     @product = Product.find(params[:id])
   end
 
-  def params_user
+  def params_product
     params.require(:product).permit(:description, :kind, :url_image, :price)
   end
 
