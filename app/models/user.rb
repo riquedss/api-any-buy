@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   has_one :cart, dependent: :destroy
-  has_many :purchases
+  has_many :purchases, dependent: :nullify
   has_many :products, through: :purchases
   has_many :favorites, dependent: :destroy
   has_many :product, through: :favorites
