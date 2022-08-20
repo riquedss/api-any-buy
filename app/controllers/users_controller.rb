@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def update_adm
-    if @user.update({ role: 1 })
+    if @user.update({ kind: 1 })
       render(json: @user)
     else
       render(json: @user.errors)
