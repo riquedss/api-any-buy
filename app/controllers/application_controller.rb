@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
 
   def verify_authenticated(kind = 'all_user')
     @user = current_user
-    return if @user && (@user.kind == kind || auth_user(kind, @user))
+    return @user if @user && (@user.kind == kind || auth_user(kind, @user))
 
     render(json: { message: "You aren't authenticated." }, status: :unauthorized)
   end
