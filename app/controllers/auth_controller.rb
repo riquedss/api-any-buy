@@ -13,10 +13,12 @@ class AuthController < ApplicationController
 
   def signup
     @user = User.new(params_user)
-    if @user.save
-      render(json: @user, status: :created)
+    @cart = @user.build_cart
+    if @user.save && @cart.save
+      render(json: @user, status: :ok)
     else
-      render(json: @user.errors, status: :unprocessable_entity)
+      @user.destroy
+      render(json: { user: @user.errors, cart: @cart.errors }, status: :unprocessable_entity)
     end
   end
 
